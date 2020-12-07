@@ -29,6 +29,16 @@ class PowerProfileMessage(ProfileMessage):
         return self.msg.content[1]
 
     @lazyproperty
+    def pedalBalance(self):
+        """
+        The pedalBalance field is used to transmit the pedal balance recorded from the power sensor.
+        8-bits(0xFF,0b11111111). The left most bit indicates whether it is the Left or Right pedal: R = 1 , L = 0; Returns 255(0xFF) for NULL values
+        The rest of the bits indicate what is the % output of the respective pedal (0-100%), which % output of the other pedal can be calculated.
+        Right% + Left% = 100%
+        """
+        return self.msg.content[2]
+
+    @lazyproperty
     def instantaneousCadence(self):
         """
         The instantaneous cadence field is used to transmit the pedaling cadence recorded from the power sensor.
